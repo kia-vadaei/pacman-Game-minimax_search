@@ -20,6 +20,8 @@ from game import Agent
 from pacman import GameState
 
 
+
+
 def scoreEvaluationFunction(currentGameState: GameState):
     """
     This default evaluation function just returns the score of the state.
@@ -39,6 +41,33 @@ class MultiAgentSearchAgent(Agent):
 
 
 class AIAgent(MultiAgentSearchAgent):
+    
+    def minimax_alpha_beta(self, game_state : GameState, depth, alpha, beta, agent_indx):
+        if depth == 0 or game_state.isWin() or game_state.isLose():
+            return self.evaluationFunction()
+        
+        legal_actions = game_state.getLegalActions(agent_indx)  # 0 is pacman and else are ghosts
+        
+        #========================
+        #       max player
+        #========================
+
+        if legal_actions == 0:  #pacman
+            max_eval = - float('inf')
+            for action in legal_actions:
+                successor_state = game_state.generateSuccessor(agent_indx, action)
+                eval = self.minimax_alpha_beta(successor_state, depth-1, alpha, beta, (agent_indx + 1) % 2)
+                max_eval = max(max_eval, eval)
+                alpha = max(alpha, max_eval)
+                if beta <= alpha:
+                    break
+                return max_eval
+
+        #========================
+        #       min player
+        #========================
+    
+
     def getAction(self, gameState: GameState):
         """
         Here are some method calls that might be useful when implementing minimax.
