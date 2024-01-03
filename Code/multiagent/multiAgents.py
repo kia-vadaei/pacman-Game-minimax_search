@@ -63,10 +63,18 @@ class AIAgent(MultiAgentSearchAgent):
                     break
                 return max_eval
 
-        #========================
-        #       min player
-        #========================
-    
+        # # Min player (Agent minimizing the utility)
+        else:
+            minEval = float('inf')
+            for action in legal_actions:
+                successorState = game_state.generateSuccessor(agent_indx, action)
+                eval = self.minimax_alpha_beta(successorState, depth - 1, alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
+                minEval = min(minEval, eval)
+                beta = min(beta, minEval)
+                if beta <= alpha:
+                    break  # Alpha cut-off
+            return minEval
+
 
     def getAction(self, gameState: GameState):
         """
