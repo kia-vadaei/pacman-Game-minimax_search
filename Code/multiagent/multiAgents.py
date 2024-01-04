@@ -18,7 +18,7 @@ import random, util
 
 from game import Agent
 from pacman import GameState
-
+import math 
 
 
 
@@ -43,32 +43,38 @@ class MultiAgentSearchAgent(Agent):
 class AIAgent(MultiAgentSearchAgent):
     
     def minimax_alpha_beta(self, game_state : GameState, depth, alpha, beta, agent_indx):
+
         if depth == 0 or game_state.isWin() or game_state.isLose():
-            return self.evaluationFunction()
+            # print(f'is =====> {self.evaluationFunction(game_state)}')
+            return self.evaluationFunction(game_state)
         
-        legal_actions = game_state.getLegalActions(agent_indx)  # 0 is pacman and else are ghosts
-        
+        legal_actions = game_state.getLegalActions(agent_indx)  # index 0 is pacman and else are ghosts
+
         #========================
         #       max player
         #========================
+        
 
-        if legal_actions == 0:  #pacman
-            max_eval = - float('inf')
+        if agent_indx == 0:  #pacman
+            max_eval = float('-inf')
             for action in legal_actions:
                 successor_state = game_state.generateSuccessor(agent_indx, action)
-                eval = self.minimax_alpha_beta(successor_state, depth-1, alpha, beta, (agent_indx + 1) % 2)
+                eval = self.minimax_alpha_beta(successor_state, depth , alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
                 max_eval = max(max_eval, eval)
                 alpha = max(alpha, max_eval)
                 if beta <= alpha:
                     break
-                return max_eval
+            return max_eval
 
-        # # Min player (Agent minimizing the utility)
+        #   Min player (Agent minimizing the utility)
         else:
             minEval = float('inf')
+            if agent_indx % game_state.getNumAgents() == 1:
+                depth -= 1 
+            
             for action in legal_actions:
-                successorState = game_state.generateSuccessor(agent_indx, action)
-                eval = self.minimax_alpha_beta(successorState, depth - 1, alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
+                successor_state = game_state.generateSuccessor(agent_indx, action)
+                eval = self.minimax_alpha_beta(successor_state, depth, alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
                 minEval = min(minEval, eval)
                 beta = min(beta, minEval)
                 if beta <= alpha:
@@ -77,25 +83,18 @@ class AIAgent(MultiAgentSearchAgent):
 
 
     def getAction(self, gameState: GameState):
-        """
-        Here are some method calls that might be useful when implementing minimax.
+        
+        initialAlpha = float('-inf')
+        initialBeta = float('inf')
 
-        gameState.getLegalActions(agentIndex):
-        Returns a list of legal actions for an agent
-        agentIndex=0 means Pacman, ghosts are >= 1
+        possibleActions = gameState.getLegalActions(0)
+        action_scores = [self.minimax_alpha_beta(gameState.generateSuccessor(0, action), self.depth,initialAlpha, initialBeta ,0 ) for action
+                         in possibleActions]
+        max_action = max(action_scores)
+        max_indices = [index for index in range(len(action_scores)) if action_scores[index] == max_action]
+        chosenIndex = random.choice(max_indices)
+        return possibleActions[chosenIndex]
 
-        gameState.generateSuccessor(agentIndex, action):
-        Returns the successor game state after an agent takes an action
-
-        gameState.getNumAgents():
-        Returns the total number of agents in the game
-
-        gameState.isWin():
-        Returns whether or not the game state is a winning state
-
-        gameState.isLose():
-        Returns whether or not the game state is a losing state
-        """
 
         # TODO: Your code goes here
         # util.raiseNotDefined()
