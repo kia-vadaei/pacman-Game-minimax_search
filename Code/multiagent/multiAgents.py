@@ -38,14 +38,14 @@ class MultiAgentSearchAgent(Agent):
         self.evaluationFunction = util.lookup(evalFn, globals())
         self.depth = int(depth)
         self.time_limit = int(time_limit)
-
+        self.flag = True
+        
 
 class AIAgent(MultiAgentSearchAgent):
     
     def minimax_alpha_beta(self, game_state : GameState, depth, alpha, beta, agent_indx):
 
         if depth == 0 or game_state.isWin() or game_state.isLose():
-            # print(f'is =====> {self.evaluationFunction(game_state)}')
             return self.evaluationFunction(game_state)
         
         legal_actions = game_state.getLegalActions(agent_indx)  # index 0 is pacman and else are ghosts
@@ -66,10 +66,13 @@ class AIAgent(MultiAgentSearchAgent):
                     break
             return max_eval
 
-        #   Min player (Agent minimizing the utility)
+        #========================
+        #       min player
+        #========================
+    
         else:
             minEval = float('inf')
-            if agent_indx % game_state.getNumAgents() == 1:
+            if (agent_indx % game_state.getNumAgents()) == 1:
                 depth -= 1 
             
             for action in legal_actions:
@@ -84,14 +87,23 @@ class AIAgent(MultiAgentSearchAgent):
 
     def getAction(self, gameState: GameState):
         
+        # print(f'issssssss {self.evaluationFunction(gameState)}')
         initialAlpha = float('-inf')
         initialBeta = float('inf')
 
         possibleActions = gameState.getLegalActions(0)
-        action_scores = [self.minimax_alpha_beta(gameState.generateSuccessor(0, action), self.depth,initialAlpha, initialBeta ,0 ) for action
-                         in possibleActions]
+
+        action_scores = []
+
+        for action in possibleActions:
+            action_scores.append(self.minimax_alpha_beta(gameState.generateSuccessor(0, action), self.depth,initialAlpha, initialBeta ,0 ))
+
         max_action = max(action_scores)
-        max_indices = [index for index in range(len(action_scores)) if action_scores[index] == max_action]
+        max_indices = []
+        for index in range(len(action_scores)):
+            if action_scores[index] == max_action:
+                max_indices.append(index)
+        
         chosenIndex = random.choice(max_indices)
         return possibleActions[chosenIndex]
 
