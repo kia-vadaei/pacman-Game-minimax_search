@@ -42,7 +42,7 @@ class MultiAgentSearchAgent(Agent):
         
 
 class AIAgent(MultiAgentSearchAgent):
-    
+
     def minimax_alpha_beta(self, game_state : GameState, depth, alpha, beta, agent_indx):
 
         if depth == 0 or game_state.isWin() or game_state.isLose():
@@ -59,7 +59,8 @@ class AIAgent(MultiAgentSearchAgent):
             max_eval = float('-inf')
             for action in legal_actions:
                 successor_state = game_state.generateSuccessor(agent_indx, action)
-                eval = self.minimax_alpha_beta(successor_state, depth , alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
+                eval = self.minimax_alpha_beta(successor_state, depth , alpha, beta,
+                                               (agent_indx + 1) % game_state.getNumAgents())
                 max_eval = max(max_eval, eval)
                 alpha = max(alpha, max_eval)
                 if beta <= alpha:
@@ -72,7 +73,7 @@ class AIAgent(MultiAgentSearchAgent):
     
         else:
             minEval = float('inf')
-            if (agent_indx % game_state.getNumAgents()) == 1:
+            if (game_state.getNumAgents() - agent_indx) == 1:
                 depth -= 1 
             
             for action in legal_actions:
@@ -106,7 +107,4 @@ class AIAgent(MultiAgentSearchAgent):
         
         chosenIndex = random.choice(max_indices)
         return possibleActions[chosenIndex]
-
-
-        # TODO: Your code goes here
         # util.raiseNotDefined()
