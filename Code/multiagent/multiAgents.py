@@ -41,7 +41,7 @@ class MultiAgentSearchAgent(Agent):
         
 
 class AIAgent(MultiAgentSearchAgent):
-
+    
     def minimax_alpha_beta(self, game_state : GameState, depth, alpha, beta, agent_indx):
 
         if depth == 0 or game_state.isWin() or game_state.isLose():
@@ -65,8 +65,6 @@ class AIAgent(MultiAgentSearchAgent):
                 eval , _ = self.minimax_alpha_beta(successor_state, depth , alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
                 print(f'eval is: {eval}')
                 action_scores.append(eval)
-                eval = self.minimax_alpha_beta(successor_state, depth , alpha, beta,
-                                               (agent_indx + 1) % game_state.getNumAgents())
                 max_eval = max(max_eval, eval)
                 alpha = max(alpha, max_eval)
                 if beta <= alpha:
@@ -84,7 +82,7 @@ class AIAgent(MultiAgentSearchAgent):
     
         else:
             minEval = float('inf')
-            if (game_state.getNumAgents() - agent_indx) == 1:
+            if (agent_indx % game_state.getNumAgents()) == game_state.getNumAgents() - 1:
                 depth -= 1 
             
             for action in legal_actions:
@@ -104,6 +102,8 @@ class AIAgent(MultiAgentSearchAgent):
         initialAlpha = float('-inf')
         initialBeta = float('inf')
 
+
+        possibleActions = gameState.getLegalActions(0)
         # action_scores = []
 
         # for action in possibleActions:
