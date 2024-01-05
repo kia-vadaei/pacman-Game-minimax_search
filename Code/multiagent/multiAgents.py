@@ -38,7 +38,6 @@ class MultiAgentSearchAgent(Agent):
         self.evaluationFunction = util.lookup(evalFn, globals())
         self.depth = int(depth)
         self.time_limit = int(time_limit)
-        self.flag = True
         
 
 class AIAgent(MultiAgentSearchAgent):
@@ -46,7 +45,8 @@ class AIAgent(MultiAgentSearchAgent):
     def minimax_alpha_beta(self, game_state : GameState, depth, alpha, beta, agent_indx):
 
         if depth == 0 or game_state.isWin() or game_state.isLose():
-            return self.evaluationFunction(game_state)
+            return self.evaluationFunction(game_state) , None
+        
         
         legal_actions = game_state.getLegalActions(agent_indx)  # index 0 is pacman and else are ghosts
 
@@ -56,16 +56,27 @@ class AIAgent(MultiAgentSearchAgent):
         
 
         if agent_indx == 0:  #pacman
+            action_scores = []
+            max_indices = []
+            
             max_eval = float('-inf')
             for action in legal_actions:
                 successor_state = game_state.generateSuccessor(agent_indx, action)
+                eval , _ = self.minimax_alpha_beta(successor_state, depth , alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
+                print(f'eval is: {eval}')
+                action_scores.append(eval)
                 eval = self.minimax_alpha_beta(successor_state, depth , alpha, beta,
                                                (agent_indx + 1) % game_state.getNumAgents())
                 max_eval = max(max_eval, eval)
                 alpha = max(alpha, max_eval)
                 if beta <= alpha:
                     break
-            return max_eval
+            for index in range(len(action_scores)):
+                if action_scores[index] == max_eval:
+                    max_indices.append(index)
+            chosenIndex = random.choice(max_indices)
+            print(f'legal is : {legal_actions}\naction score is: {action_scores}')
+            return max_eval , legal_actions[chosenIndex]
 
         #========================
         #       min player
@@ -78,12 +89,13 @@ class AIAgent(MultiAgentSearchAgent):
             
             for action in legal_actions:
                 successor_state = game_state.generateSuccessor(agent_indx, action)
-                eval = self.minimax_alpha_beta(successor_state, depth, alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
+                eval , _ = self.minimax_alpha_beta(successor_state, depth, alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
                 minEval = min(minEval, eval)
                 beta = min(beta, minEval)
                 if beta <= alpha:
                     break  # Alpha cut-off
-            return minEval
+
+            return minEval , None
 
 
     def getAction(self, gameState: GameState):
@@ -92,19 +104,23 @@ class AIAgent(MultiAgentSearchAgent):
         initialAlpha = float('-inf')
         initialBeta = float('inf')
 
-        possibleActions = gameState.getLegalActions(0)
+        # action_scores = []
 
-        action_scores = []
+        # for action in possibleActions:
+        #     action_scores.append(self.minimax_alpha_beta(gameState.generateSuccessor(0, action), self.depth,initialAlpha, initialBeta ,0 ))
 
-        for action in possibleActions:
-            action_scores.append(self.minimax_alpha_beta(gameState.generateSuccessor(0, action), self.depth,initialAlpha, initialBeta ,0 ))
-
-        max_action = max(action_scores)
-        max_indices = []
-        for index in range(len(action_scores)):
-            if action_scores[index] == max_action:
-                max_indices.append(index)
+        # max_action = max(action_scores)
+        # max_indices = []
+        # for index in range(len(action_scores)):
+        #     if action_scores[index] == max_action:
+        #         max_indices.append(index)
         
-        chosenIndex = random.choice(max_indices)
-        return possibleActions[chosenIndex]
+        # chosenIndex = random.choice(max_indices)
+        # print(f'choosen is : {possibleActions[chosenIndex]}')
+        _, action = self.minimax_alpha_beta(gameState, self.depth,initialAlpha, initialBeta ,0 )
+        print(f'action: {action}')
+        return action
+
+
+        # TODO: Your code goes here
         # util.raiseNotDefined()
