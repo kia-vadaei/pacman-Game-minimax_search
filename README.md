@@ -1,5 +1,7 @@
 # Pac-Man AI Project
 
+<img src="https://s31.picofile.com/file/8471267534/Screenshot_2024_01_06_203333.png" alt="Alt text" width="500" height="310">
+
 ## Authors
 
 - Melika Shirian
