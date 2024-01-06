@@ -47,9 +47,8 @@ class AIAgent(MultiAgentSearchAgent):
         if depth == 0 or game_state.isWin() or game_state.isLose():
             return self.evaluationFunction(game_state) , None
         
-        legal_actions = game_state.getLegalActions(agent_indx) 
-
-        # index 0 is pacman and else are ghosts        
+        
+        legal_actions = game_state.getLegalActions(agent_indx)  # index 0 is pacman and else are ghosts
 
         #========================
         #       max player
@@ -63,9 +62,7 @@ class AIAgent(MultiAgentSearchAgent):
             max_eval = float('-inf')
             for action in legal_actions:
                 successor_state = game_state.generateSuccessor(agent_indx, action)
-                eval , _ = self.minimax_alpha_beta(successor_state,
-                                                    depth , alpha, beta,
-                                                    (agent_indx + 1) % game_state.getNumAgents())
+                eval , _ = self.minimax_alpha_beta(successor_state, depth , alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
                 print(f'eval is: {eval}')
                 action_scores.append(eval)
                 max_eval = max(max_eval, eval)
@@ -84,29 +81,46 @@ class AIAgent(MultiAgentSearchAgent):
         #========================
     
         else:
-            min_eval = float('inf')
+            minEval = float('inf')
             if (agent_indx % game_state.getNumAgents()) == game_state.getNumAgents() - 1:
                 depth -= 1 
             
             for action in legal_actions:
                 successor_state = game_state.generateSuccessor(agent_indx, action)
-                eval , _ = self.minimax_alpha_beta(successor_state,
-                                                    depth, alpha, beta,
-                                                    (agent_indx + 1) % game_state.getNumAgents())
-                min_eval = min(min_eval, eval)
-                beta = min(beta, min_eval)
+                eval , _ = self.minimax_alpha_beta(successor_state, depth, alpha, beta, (agent_indx + 1) % game_state.getNumAgents())
+                minEval = min(minEval, eval)
+                beta = min(beta, minEval)
                 if beta <= alpha:
                     break  # Alpha cut-off
 
-            return min_eval , None
+            return minEval , None
 
 
     def getAction(self, gameState: GameState):
         
+        # print(f'issssssss {self.evaluationFunction(gameState)}')
         initialAlpha = float('-inf')
         initialBeta = float('inf')
 
+
+        possibleActions = gameState.getLegalActions(0)
+        # action_scores = []
+
+        # for action in possibleActions:
+        #     action_scores.append(self.minimax_alpha_beta(gameState.generateSuccessor(0, action), self.depth,initialAlpha, initialBeta ,0 ))
+
+        # max_action = max(action_scores)
+        # max_indices = []
+        # for index in range(len(action_scores)):
+        #     if action_scores[index] == max_action:
+        #         max_indices.append(index)
+        
+        # chosenIndex = random.choice(max_indices)
+        # print(f'choosen is : {possibleActions[chosenIndex]}')
         _, action = self.minimax_alpha_beta(gameState, self.depth,initialAlpha, initialBeta ,0 )
         print(f'action: {action}')
         return action
 
+
+        # TODO: Your code goes here
+        # util.raiseNotDefined()
