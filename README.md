@@ -1,60 +1,81 @@
-# Pacman AI Agent
+# Pac-Man AI Project
+
+## Authors
+
+- Melika Shirian
+- Kianoosh Vadaei
+
+## Instructor
+
+- Dr. Hossein Karshenas
+
+## Date
+
+2024-01-06
 
 ## Overview
 
-This project aims to implement an intelligent agent capable of performing in the Pacman game environment and achieving the highest score possible.
-## Environment
+This project focuses on implementing AI strategies for the classic game Pac-Man. It incorporates elements of reinforcement learning and game playing algorithms.
 
-In this phase of the project, we use the Pacman environment provided by UC Berkeley. The agent navigates through a maze, consuming small dots and avoiding ghosts. The objective is to eat the dots while avoiding collisions with ghosts. Eating large dots temporarily allows the agent to eat ghosts and score more points.
+## Features
 
-### Project Structure
+- **Minimax Algorithm with Alpha-Beta Pruning**: Implements Minimax with alpha-beta pruning to enhance the efficiency of the search algorithm.
 
-```plaintext
-multiagent.zip
-├── multiAgents.py
-├── pacman.py
-├── game.py
-└── util.py
-```
-### Getting Started
+- **Multi-Agent Environment**: The project includes a multi-agent environment where Pac-Man interacts with intelligent ghosts.
 
-## Getting Started
+## Usage
 
-To run the game, open the terminal in the game environment directory and execute the following command. Use arrow keys or the specified keyboard keys for agent movement.
+To use the environment, follow these steps after cloning the GitHub repository:
 
-```bash
-python pacman.py -k 1
-```
-### Possible Actions
+1. Clone the repository:
 
-- Left: 'a'
-- Right: 'd'
-- Up: 'w'
-- Down: 's'
-- Stop: 'q'
+    ```bash
+    git clone https://github.com/your-username/pacman-ai-project.git
+    ```
 
-## Actions
+2. Navigate to the directory `multi-agent-search-pandas\Code\multiagent` using the terminal:
 
-The agent can choose actions such as North, South, East, West, and Stop, provided the movement is legal. Actions are deterministic.
-## Game Completion
+    ```bash
+    cd pacman-ai-project/multi-agent-search-pandas/Code/multiagent
+    ```
 
-The game ends under the following conditions:
+3. Run the following script to play the game:
 
-- The agent collides with a ghost.
-- All dots within the environment are consumed.
-## Implementation
+    ```bash
+    python play_game.py
+    ```
 
-Each game state is defined by a `GameState`. Functions defined for this class allow you to retrieve the current game state and legal actions.
+4. Run the following script to play against intelligent ghosts:
 
-- `gameState.getLegalActions(agentIndex)`: Returns a list of legal actions for an agent.
-- `gameState.generateSuccessor(agentIndex, action)`: Returns the successor game state after an agent takes an action.
+    ```bash
+    python play_against_ghosts.py
+    ```
 
-The code should expand the game tree up to the specified depth, and leaf nodes in the Minimax tree should be scored using `self.evaluationFunction`.
+5. Run the following script to increase the number of ghosts:
 
-## Testing
+    ```bash
+    python increase_ghosts.py
+    ```
 
-To test your algorithm, open the terminal in the game environment directory and execute the following command:
+6. Run the following script for manual play mode:
 
-```bash
-python pacman.py -p AIAgent -k 1 -a depth=4
-```
+    ```bash
+    python manual_play.py
+    ```
+
+## References
+
+- OpenAI. "ChatGPT." [https://www.openai.com/](https://www.openai.com/)
+
+- Russell, Stuart, and Norvig, Peter. "Artificial Intelligence: A Modern Approach." (Book)
+
+- "Game Playing 1 - Minimax, Alpha-beta Pruning | Stanford CS221: AI (Autumn 2019)"
+
+- "Multi-agent Pac-Man Stanford CS221 Spring 2018." [Link](https://web.stanford.edu/class/archive/cs/cs221/cs221.1186/assignments/pacman/index.html)
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+Feel free to explore and contribute!
+
