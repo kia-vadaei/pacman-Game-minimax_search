@@ -75,9 +75,9 @@ To use the environment, follow these steps after cloning the GitHub repository:
 
 - Game Playing 1 - Minimax, Alpha-beta Pruning | Stanford CS221: AI (Autumn 2019). [Link](https://www.youtube.com/watch?v=3pU-Hrz_xy4&t=4317s)
 
-- OpenAI. "ChatGPT." [https://www.openai.com/](https://www.openai.com/)
-
 - Multi-agent Pac-Man Stanford CS221 Spring 2018. [Link](https://web.stanford.edu/class/archive/cs/cs221/cs221.1186/assignments/pacman/index.html)
+
+- OpenAI. "ChatGPT." [https://www.openai.com/](https://www.openai.com/)
 
 - Russell, Stuart, and Norvig, Peter. "Artificial Intelligence: A Modern Approach." (Book)
 
