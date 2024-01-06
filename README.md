@@ -77,9 +77,9 @@ To use the environment, follow these steps after cloning the GitHub repository:
 
 - Russell, Stuart, and Norvig, Peter. "Artificial Intelligence: A Modern Approach." (Book)
 
-- "Game Playing 1 - Minimax, Alpha-beta Pruning | Stanford CS221: AI (Autumn 2019)"
+- Game Playing 1 - Minimax, Alpha-beta Pruning | Stanford CS221: AI (Autumn 2019). [Link](https://www.youtube.com/watch?v=3pU-Hrz_xy4&t=4317s)
 
-- "Multi-agent Pac-Man Stanford CS221 Spring 2018." [Link](https://web.stanford.edu/class/archive/cs/cs221/cs221.1186/assignments/pacman/index.html)
+- Multi-agent Pac-Man Stanford CS221 Spring 2018. [Link](https://web.stanford.edu/class/archive/cs/cs221/cs221.1186/assignments/pacman/index.html)
 
 Feel free to explore and contribute!
 
