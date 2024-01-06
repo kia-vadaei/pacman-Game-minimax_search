@@ -17,6 +17,12 @@
 
 This project focuses on implementing AI strategies for the classic game Pac-Man. It incorporates elements of reinforcement learning and game playing algorithms.
 
+## Table of Contents
+
+- [Usage](#usage)
+- [Features](#Features)
+- [References](#References)
+
 ## Features
 
 - **Minimax Algorithm with Alpha-Beta Pruning**: Implements Minimax with alpha-beta pruning to enhance the efficiency of the search algorithm.
