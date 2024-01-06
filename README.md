@@ -77,7 +77,7 @@ To use the environment, follow these steps after cloning the GitHub repository:
 
 - Multi-agent Pac-Man Stanford CS221 Spring 2018. [Link](https://web.stanford.edu/class/archive/cs/cs221/cs221.1186/assignments/pacman/index.html)
 
-- OpenAI. "ChatGPT." [https://www.openai.com/](https://www.openai.com/)
+- OpenAI. "ChatGPT." [Link](https://www.openai.com/)
 
 - Russell, Stuart, and Norvig, Peter. "Artificial Intelligence: A Modern Approach." (Book)
 
