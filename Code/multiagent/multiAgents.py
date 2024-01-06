@@ -84,7 +84,7 @@ class AIAgent(MultiAgentSearchAgent):
         #========================
     
         else:
-            minEval = float('inf')
+            min_eval = float('inf')
             if (agent_indx % game_state.getNumAgents()) == game_state.getNumAgents() - 1:
                 depth -= 1 
             
@@ -93,12 +93,12 @@ class AIAgent(MultiAgentSearchAgent):
                 eval , _ = self.minimax_alpha_beta(successor_state,
                                                     depth, alpha, beta,
                                                     (agent_indx + 1) % game_state.getNumAgents())
-                minEval = min(minEval, eval)
-                beta = min(beta, minEval)
+                min_eval = min(min_eval, eval)
+                beta = min(beta, min_eval)
                 if beta <= alpha:
                     break  # Alpha cut-off
 
-            return minEval , None
+            return min_eval , None
 
 
     def getAction(self, gameState: GameState):
