@@ -50,22 +50,10 @@ To use the environment, follow these steps after cloning the GitHub repository:
 3. Run the following script to play the game:
 
     ```bash
-    python play_game.py
+    python pacman.py -p AIAgent -k 1 -a depth=4
     ```
 
-4. Run the following script to play against intelligent ghosts:
-
-    ```bash
-    python play_against_ghosts.py
-    ```
-
-5. Run the following script to increase the number of ghosts:
-
-    ```bash
-    python increase_ghosts.py
-    ```
-
-6. Run the following script for manual play mode:
+4. Run the following script for manual play mode:
 
     ```bash
     python manual_play.py
